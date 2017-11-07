@@ -1,0 +1,126 @@
+There are quite a few scripts included as part of the standard Race Your Code example.
+Below is a listing of what all the scripts are for.
+
+[Starting scripts]
+These scripts are used to start the code up on an actual GTR.
+They are responsible for managing all the threads and controlling the motors via the ThunderBorg board.
+
+"RaceYourCode_Front.py"
+This script runs the Race Your Code setup for the final three-lap run on the front facing GTR.
+It will wait for the lights sequence, then signal to the rear GTR to start as well.
+
+It will be automatically set to run at startup on the front GTR.
+
+"RaceYourCode_Rear.py"
+This script runs the Race Your Code setup for both the final three-lap run and the testing time on the rear facing GTR.
+It will wait for a signal from the front GTR before starting.
+
+It will be automatically set to run at startup on the rear GTR.
+
+"NoLights_Front.py"
+This script runs the Race Your Code setup during the testing time on the front facing GTR.
+It will wait not bother to wait for the lights sequence, it will also signal the rear GTR to start immediately.
+
+It will be necessary to stop the RaceYourCode_Front.py script from running before starting this script.
+This can be done using the command: sudo killall python
+Make sure the rear GTR is ready first to ensure both GTRs start at the same time.
+
+[Simulation]
+These scripts are intended to be run on a Raspberry Pi or similar Linux machine for testing code without a GTR.
+See the "Simulation modes.txt" guide for more details on running the simulations.
+
+"SimulationFront.py"
+This version talks with the provided simulator via Ethernet or WiFi.
+This allows for testing of the dynamic behaviour of the scripts, but it only works for the front GTR.
+Ideally the simulator should be run on a Windows machine with this script run on a Raspberry Pi 3.
+The simulator should also run on a Linux machine, but it may not work on a Raspberry Pi. 
+
+"SimulationRear.py"
+This version talks with the provided simulator via Ethernet or WiFi.
+This allows for testing of the dynamic behaviour of the scripts, but it only works for the rear GTR.
+As there is no front GTR the code will start on its own without waiting for the lights to change.
+Ideally the simulator should be run on a Windows machine with this script run on a Raspberry Pi 3.
+The simulator should also run on a Linux machine, but it may not work on a Raspberry Pi. 
+
+"SimulationImages.py"
+This version loads either a single image or a series of images from a directory.
+It can be used to confirm how the image processing is actually working.
+It is not capable of dynamic behaviour as the images are not based on the motor speeds.
+
+The script is setup for testing the front GTR by default.
+This can be changed to the rear GTR by replacing:
+Globals.frontRobot = True
+with:
+Globals.frontRobot = False
+
+[Settings]
+These files hold the settings used by the various scripts in a single place.
+The Settings.py script can be changed while the code is running.
+Upon being overwritten the code should see the change and load in the new settings.
+
+"Settings.py"
+This holds almost every setting used by the standard example.
+Changing these can be done on the fly and some values in the script are calculated.
+The settings are split into sections based on their functionality.
+
+Bear in mind some settings (such as camera resolution) cannot be changed dynamically.
+These values are towards the top and labelled to say they should not be changed.
+To alter these values first stop the running script, then make changes, then re-run the script.
+
+"Globals.py"
+This module is used to share values between all of the scripts.
+The values in the file are simply defaults and will typically be overwritten by other code.
+
+You can add new values in this module so that they can be accessed by all of the scripts in the code.
+
+[Manual control]
+These are helper scripts which allow manual control of the GTR.
+They are not intended for precise control, they are more aimed at getting a stuck robot free again.
+You should make sure no other scripts are running before trying to use these controls.
+
+"ManualMotors_Front.py"
+Manual sliders for controlling the front GTR.
+
+"ManualMotors_Rear.py"
+Manual sliders for controlling the rear GTR.
+
+[Standard processing]
+Most of the processing in the code is done by the scripts below.
+Most people will probably want to alter Race.py in order to take a better line around the track.
+More advanced competitors may wish to alter ImageProcessor.py to change how the standard processing calculates the control of the motors.
+
+"Race.py"
+This script is where the GTRs can have their strategy around the track improved using the Race Code Functions.
+It is run in its own thread alongside the image processing code and can be used in any way you wish.
+By default it will simply follow the centre lane of the track until told to stop.
+See the "Modifying race.py.txt" guide for more details on how this script works.
+
+"ImageProcessor.py"
+This script performs both the image processing and the calculations for the motor control.
+There are multiple threads used for processing to improve the speed of the code overall.
+By default it uses an input from Race.py to decide which lane to aim for and tries to loosely follow that lane while maintaining a good cornering speed
+See the "Modifying ImageProcessor.py.txt" guide for more details on how this script works.
+
+[Utilities]
+These scripts are here to provide functionality to other scripts and do not really do much on their own.
+
+"RaceCodeFunctions.py"
+This script creates all of the Race Code Functions available to Race.py.
+Generally you will not need to add any new functions here, but you may want to alter existing ones for logging or similar.
+
+"ThunderBorg.py"
+This script is the standard library for controlling the ThunderBorg board, which in turn controls the motors.
+It provides simple functions for motor control which use I²C to communicate with the board itself.
+
+"DisplayReadings.py" and "DisplayReadings.sh"
+This script provides a way of displaying the values sent from either robot/script when they are not sent to the camera stream.
+On Windows run the python script (DisplayReadings.py), on Linux run the shell script (DisplayReadings.sh).
+The script will need to be run on another machine network connected to the robot(s)/script(s) you are running.
+To get the scripts to send their data to this display change ipDisplay in Settings.py to the computers IP address or network name.
+When running for real make sure ipDisplay is set to '192.168.1.131', otherwise no status will be shown on the stream!
+The values are displayed in the same grid layout as used on the camera stream.
+
+"EndAll.sh"
+This provides a convenient way to terminate all running python scripts and then make sure the robot is stopped.
+We recommend running this script as the first thing you do during your testing hour to stop the auto-loaded script running.
+If the terminal is currently running a script you can press CTRL+Z to get a prompt which you can run this from.
