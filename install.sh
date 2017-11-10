@@ -12,6 +12,11 @@ sudo apt-get update
 #source ricar_ryc/env/bin/activate
 #pip install -r ricar_ryc/requirements_rpi.txt
 
+
+
+
+# https://www.formulapi.com/race-code/sd-card-monster-summer-2017
+
 mkdir ~/thunderborg
 cd ~/thunderborg
 wget https://www.piborg.org/downloads/thunderborg/examples.zip
@@ -21,3 +26,4 @@ chmod +x install.sh
 sudo apt-get -y install python-picamera
 sudo apt-get -y install libcv-dev libopencv-dev python-opencv
 
+sudo pip install virtualenv virtualenvwrapper
