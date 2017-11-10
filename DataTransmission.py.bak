@@ -15,12 +15,12 @@ import threading
 import Globals
 import Settings
 import ImageProcessor
-import socketserver
+import SocketServer
 import socket
 import numpy
-from http.server import BaseHTTPRequestHandler, HTTPServer
-from socketserver import ThreadingMixIn
-print('Libraries loaded')
+from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
+from SocketServer import ThreadingMixIn
+print 'Libraries loaded'
 
 RAD_TO_DEG = 180.0 / math.pi
 TYPE_STRING = type('')
@@ -35,7 +35,7 @@ def NewDataFront():
 def NewDataRear():
 	newData = Globals.dataReceived
 	# Copy the lights detection state from the front robot
-	if 'lights' in newData:
+	if newData.has_key('lights'):
 		lights = int(newData['lights'])
 		if lights != Globals.startLights:
 			Globals.startLights = lights
@@ -49,10 +49,10 @@ def NewDataRear():
 				Globals.MonsterLed(0, 1, 0)
 				ImageProcessor.LogData(ImageProcessor.LOG_MAJOR, 'Lights: 3 - Green')
 	# Check to see if the front robot has crossed the line yet
-	if 'lap-count' in newData:
+	if newData.has_key('lap-count'):
 		lapCount = int(newData['lap-count'])
 		if lapCount != Globals.lapCount:
-			print('--- FRONT ROBOT CROSSED LINE ---')
+			print '--- FRONT ROBOT CROSSED LINE ---'
 			Globals.lapCount = lapCount
 			Globals.lapTravelled = 0.0
 
@@ -87,7 +87,7 @@ def UpdateDataToSend():
 def BuildDataPacket():
 	packet = 'robot'
 	# Add each key/value pair
-	for key in list(Globals.dataToSend.keys()):
+	for key in Globals.dataToSend.keys():
 		value = Globals.dataToSend[key]
 		# Ensure values are strings
 		if type(value) == TYPE_FLOAT64:
@@ -103,7 +103,7 @@ def BuildDataPacket():
 	return packet
 
 # Class used to implement the incoming TCP server
-class TcpServer(socketserver.BaseRequestHandler):
+class TcpServer(SocketServer.BaseRequestHandler):
 	def handle(self):
 		# Get the request data
 		reqData = self.request.recv(2048)
@@ -126,14 +126,14 @@ class TcpServer(socketserver.BaseRequestHandler):
 				NewDataRear()
 		else:
 			# Unexpected command
-			print('Unexpected command: %s' % (reqData))
+			print 'Unexpected command: %s' % (reqData)
 
 # Thread for handling incoming data
 class IncomingDataThread(threading.Thread):
 	def __init__(self):
 		super(IncomingDataThread, self).__init__()
 		self.terminated = False
-		self.tcpServer = socketserver.TCPServer(("0.0.0.0", Settings.transferPort), TcpServer)
+		self.tcpServer = SocketServer.TCPServer(("0.0.0.0", Settings.transferPort), TcpServer)
 		self.tcpServer.timeout = 1
 		ImageProcessor.LogData(ImageProcessor.LOG_CRITICAL, 'Incoming data thread started')
 		self.start()
@@ -143,7 +143,7 @@ class IncomingDataThread(threading.Thread):
 			while not self.terminated:
 				self.tcpServer.handle_request()
 		except:
-			print('INCOMING-TCP-ERROR')
+			print 'INCOMING-TCP-ERROR'
 		ImageProcessor.LogData(ImageProcessor.LOG_CRITICAL, 'Incoming data thread terminated')
 
 # Thread for sending updates
@@ -172,7 +172,7 @@ class OutgoingDataThread(threading.Thread):
 					sender.close()
 					del sender
 				except:
-					print('OUTGOING-TCP-ERROR (%s)' % (self.targetIP))
+					print 'OUTGOING-TCP-ERROR (%s)' % (self.targetIP)
 				self.event.clear()
 		ImageProcessor.LogData(ImageProcessor.LOG_CRITICAL, 'Outgoing data thread to %s terminated' % (self.targetIP))
 

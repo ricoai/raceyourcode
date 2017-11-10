@@ -29,14 +29,14 @@ def LogUserCall(paramFormat, paramTupple):
 		logLine = '%s %s()\n' % (ImageProcessor.TimeOnlyStamp(), calleeName)
 	if Globals.userLogFile:
 		Globals.userLogFile.write(logLine)
-	print(logLine)
+	print logLine
 
 # Race Code Functions
 def WaitForGo():
 	LogUserCall(None, None)
 	if Globals.running:
 		if Globals.skipLights:
-			print('Skipping lights...')
+			print 'Skipping lights...'
 			Globals.startLights = ImageProcessor.THIRD_GREEN_GO
 			ImageProcessor.SetImageMode(ImageProcessor.FOLLOW_TRACK)
 		else:
@@ -166,7 +166,7 @@ def StartDetailedLoging():
 		logFile = open(logPath, 'w')
 		Globals.processingLogFile = logFile
 	except:
-		print('Failed to start processing logging!')
+		print 'Failed to start processing logging!'
 	
 def StartUserLog():
 	if Globals.userLogFile:
@@ -179,7 +179,7 @@ def StartUserLog():
 		logFile = open(logPath, 'w')
 		Globals.userLogFile = logFile
 	except:
-		print('Failed to start user logging!')
+		print 'Failed to start user logging!'
 	LogUserCall(None, None)
 
 def EndDetailedLog():
@@ -239,8 +239,7 @@ def SplitRGB(image):
 	return red, green, blue
 
 # Stage 7 - Auto level single channel based on settings
-def AutoLevel(xxx_todo_changeme):
-	(channel, minimum, maximum, gain) = xxx_todo_changeme
+def AutoLevel((channel, minimum, maximum, gain)):
 	autoGain = Settings.targetLevel / maximum
 	adjusted = (channel - minimum) * gain * autoGain
 	adjusted = numpy.clip(adjusted, 0, 255)
@@ -248,13 +247,11 @@ def AutoLevel(xxx_todo_changeme):
 	return adjusted
 
 # Stage 8 - Get maximums for each pixel
-def MaxImage(xxx_todo_changeme1):
-	(red, green, blue) = xxx_todo_changeme1
+def MaxImage((red, green, blue)):
 	return numpy.maximum(numpy.maximum(blue, green), red)
 
 # Stage 9 - Exclude the unwanted ares on a channel
-def ExcludeSections(xxx_todo_changeme2):
-	(channel, maxImage, black) = xxx_todo_changeme2
+def ExcludeSections((channel, maxImage, black)):
 	sectionOnly = channel[:]
 	sectionOnly[sectionOnly < maxImage] = 0
 	exclude = black > 0
@@ -262,8 +259,7 @@ def ExcludeSections(xxx_todo_changeme2):
 	return sectionOnly
 
 # Stage 10 - Build single view from channels
-def BuildView(xxx_todo_changeme3):
-	(red, green, blue, black) = xxx_todo_changeme3
+def BuildView((red, green, blue, black)):
 	viewImage = cv2.merge([blue, green, red])
 	walls = cv2.merge([black, black, black])
 	viewImage = cv2.addWeighted(viewImage, 1.0, walls, 1.0, 0)

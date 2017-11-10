@@ -62,8 +62,7 @@ lineIndexToOffset = {
 	6 : -3.0
 }
 
-def rgb2bgr(xxx_todo_changeme3):
-	(r, g, b) = xxx_todo_changeme3
+def rgb2bgr((r, g, b)):
 	return b, g, r
 
 def SetImageMode(newMode):
@@ -81,7 +80,7 @@ def TimeOnlyStamp():
 def LogData(logLevel, logString):
 	logLine = '%s %s\n' % (TimeOnlyStamp(), logString)
 	if logLevel <= Globals.processingPrintLogLevel:
-		print(logLine)
+		print logLine
 	if Globals.processingLogFile:
 		if logLevel <= Globals.processingWriteLogLevel:
 			Globals.processingLogFile.write(logLine)
@@ -364,8 +363,7 @@ class ControlLoop(threading.Thread):
 		self.accumulateDistance = calculateDistance
 		return overrideSpeed, overrideSteering
 
-	def RunLoop(self, xxx_todo_changeme):
-		(line0, local0, d1, d2) = xxx_todo_changeme
+	def RunLoop(self, (line0, local0, d1, d2)):
 		with self.lock:
 			# Select the correct d0 depending on nearest line or track position
 			full0 = line0 + local0
@@ -484,8 +482,7 @@ class StreamProcessor(threading.Thread):
 		cv2.waitKey(1)
 	
 	# Helper function for plotting
-	def DrawCross(self, image, x, y, xxx_todo_changeme1):
-		(r, g, b) = xxx_todo_changeme1
+	def DrawCross(self, image, x, y, (r, g, b)):
 		points = [(x,y), (x-1,y), (x+1,y), (x,y-1), (x,y+1)]
 		for point in points:
 			x = point[0]
@@ -499,8 +496,7 @@ class StreamProcessor(threading.Thread):
 					image.itemset((y, x, 2), r)
 	
 	# Helper function for plotting
-	def DrawPoints(self, image, points, xOffset, yOffset, xxx_todo_changeme2):
-		(r, g, b) = xxx_todo_changeme2
+	def DrawPoints(self, image, points, xOffset, yOffset, (r, g, b)):
 		for point in points:
 			x = point[0] + xOffset
 			y = point[1] + yOffset
@@ -601,7 +597,7 @@ class StreamProcessor(threading.Thread):
 				if showFps:
 					fps = Settings.fpsInterval / (frameStamp - Globals.lastFrameStamp)
 					fps = '%.1f FPS' % (fps)
-					print(fps)
+					print fps
 				saveImages = writeImages
 				showAll = debugImages
 				saveAll = saveImages and debugImages

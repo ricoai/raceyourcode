@@ -10,7 +10,7 @@ import threading
 import cv2
 import numpy
 import Settings
-print('Libraries loaded')
+print 'Libraries loaded'
 
 # Global values
 global running
@@ -73,7 +73,7 @@ class StreamProcessor(threading.Thread):
 		self.name = str(name)
 		self.shownCount = 0
 		self.eventWait = (2.0 * processingThreads) / frameRate
-		print('Processor thread %s started with idle time of %.2fs' % (self.name, self.eventWait))
+		print 'Processor thread %s started with idle time of %.2fs' % (self.name, self.eventWait)
 		self.start()
 
 	def run(self):
@@ -94,7 +94,7 @@ class StreamProcessor(threading.Thread):
 					# Return ourselves to the pool at the back
 					with frameLock:
 						processorPool.insert(0, self)
-		print('Processor thread %s terminated' % (self.name))
+		print 'Processor thread %s terminated' % (self.name)
 	
 	# Image processing function
 	def ProcessImage(self, image):
@@ -112,7 +112,7 @@ class StreamProcessor(threading.Thread):
 				if showFps:
 					fps = fpsInterval / (frameStamp - lastFrameStamp)
 					fps = '%.1f FPS - %d total frames' % (fps, frameCounter)
-					print(fps)
+					print fps
 				frameAnnounce = 0
 				lastFrameStamp = frameStamp
 			else:
@@ -153,19 +153,19 @@ class ImageCapture(threading.Thread):
 					processor.nextFrame = frame
 					processor.event.set()
 				else:
-					print('Capture stream lost...')
+					print 'Capture stream lost...'
 					running = False
 					break
 			else:
 				# When the pool is starved we wait a while to allow a processor to finish
 				time.sleep(0.01)
-		print('Streaming terminated.')
+		print 'Streaming terminated.'
 
 global lastFrameStamp
 lastFrameStamp = time.time()
 
 # Startup sequence
-print('Setup camera')
+print 'Setup camera'
 os.system('sudo modprobe bcm2835-v4l2')
 capture = cv2.VideoCapture(0) 
 capture.set(cv2.cv.CV_CAP_PROP_FRAME_WIDTH, imageWidth);
@@ -174,19 +174,19 @@ capture.set(cv2.cv.CV_CAP_PROP_FPS, frameRate);
 if not capture.isOpened():
 	capture.open()
 	if not capture.isOpened():
-		print('Failed to open the camera')
+		print 'Failed to open the camera'
 		sys.exit()
 
-print('Setup stream processor threads')
+print 'Setup stream processor threads'
 processorPool = [StreamProcessor(i+1) for i in range(processingThreads)]
 allProcessors = processorPool[:]
 
-print('Wait ...')
+print 'Wait ...'
 time.sleep(2)
 captureThread = ImageCapture()
 
 try:
-	print('Press CTRL+C to quit')
+	print 'Press CTRL+C to quit'
 	# Loop indefinitely
 	while running:
 		# See if there is a frame to show
@@ -202,13 +202,13 @@ try:
 			time.sleep(0.1)
 except KeyboardInterrupt:
 	# CTRL+C exit, disable all drives
-	print('\nUser shutdown')
+	print '\nUser shutdown'
 except:
 	# Unexpected error, shut down!
 	e = sys.exc_info()[0]
-	print()
-	print(e)
-	print('\nUnexpected error, shutting down!')
+	print
+	print e
+	print '\nUnexpected error, shutting down!'
 # Tell each thread to stop, and wait for them to end
 running = False
 while allProcessors:
@@ -220,4 +220,4 @@ while allProcessors:
 captureThread.join()
 capture.release()
 del capture
-print('Program terminated.')
+print 'Program terminated.'

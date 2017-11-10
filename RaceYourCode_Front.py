@@ -19,12 +19,12 @@ import ThunderBorg
 import random
 import inspect
 import Globals
-print 'Libraries loaded'
+print('Libraries loaded')
 
 # Change the current directory to where this script is
 scriptDir = os.path.dirname(sys.argv[0])
 os.chdir(scriptDir)
-print 'Running script in directory "%s"' % (scriptDir)
+print('Running script in directory "%s"' % (scriptDir))
 
 # Setup the ThunderBorg
 TB = ThunderBorg.ThunderBorg()
@@ -33,13 +33,13 @@ TB.Init()
 if not TB.foundChip:
 	boards = ThunderBorg.ScanForThunderBorg()
 	if len(boards) == 0:
-		print 'No ThunderBorg found, check you are attached :)'
+		print('No ThunderBorg found, check you are attached :)')
 	else:
-		print 'No ThunderBorg at address %02X, but we did find boards:' % (TB.i2cAddress)
+		print('No ThunderBorg at address %02X, but we did find boards:' % (TB.i2cAddress))
 		for board in boards:
-			print '    %02X (%d)' % (board, board)
-		print 'If you need to change the I²C address change the setup line so it is correct, e.g.'
-		print 'TB.i2cAddress = 0x%02X' % (boards[0])
+			print('    %02X (%d)' % (board, board))
+		print('If you need to change the I²C address change the setup line so it is correct, e.g.')
+		print('TB.i2cAddress = 0x%02X' % (boards[0]))
 	sys.exit()
 TB.SetCommsFailsafe(False)
 TB.SetLedShowBattery(False)
@@ -78,83 +78,83 @@ Globals.frameLock = threading.Lock()
 import ImageProcessor
 import DataTransmission
 from RaceCodeFunctions import *
-print 'Image processor and Race Code Functions loaded'
+print('Image processor and Race Code Functions loaded')
 
 # Function for displaying the current settings
 def ShowSettings():
-	print '=== NEW SETTINGS ==='
-	print
+	print('=== NEW SETTINGS ===')
+	print()
 
-	print '[Image setup]'
-	print 'Camera %d x %d at %d fps' % (Settings.imageWidth, Settings.imageHeight, Settings.frameRate)
-	print 'X cropped from %d to %d' % (Settings.cropX1, Settings.cropX2)
-	print 'Y cropped from %d to %d' % (Settings.cropY1, Settings.cropY2)
-	print 'Image processing threads: %d' % (Settings.processingThreads)
-	print
+	print('[Image setup]')
+	print('Camera %d x %d at %d fps' % (Settings.imageWidth, Settings.imageHeight, Settings.frameRate))
+	print('X cropped from %d to %d' % (Settings.cropX1, Settings.cropX2))
+	print('Y cropped from %d to %d' % (Settings.cropY1, Settings.cropY2))
+	print('Image processing threads: %d' % (Settings.processingThreads))
+	print()
 
-	print '[Startup]'
-	print 'Initial mode: %d' % (Settings.startupMode)
-	print
+	print('[Startup]')
+	print('Initial mode: %d' % (Settings.startupMode))
+	print()
 
-	print '[Y scan lines]'
+	print('[Y scan lines]')
 	for Y in Settings.croppedYScan:
-		print '%d (%d)' % (Y + Settings.cropY1, Y)
-	print
+		print('%d (%d)' % (Y + Settings.cropY1, Y))
+	print()
 
-	print '[Colour identification]'
-	print 'Black limit: %d %d %d' % (Settings.blackMaxR, Settings.blackMaxG, Settings.blackMaxB)
-	print 'Green gain: %.2f' % (Settings.greenGain)
-	print 'Blue gain: %.2f' % (Settings.blueGain)
-	print 'Target level for auto-gain: %.0f' % (Settings.targetLevel)
-	print 'Erosion factor for colour channels: %.0f' % (Settings.erodeChannels)
-	print 'Final colour minimums: %d %d %d' % (Settings.redMin, Settings.greenMin, Settings.blueMin)
-	print
+	print('[Colour identification]')
+	print('Black limit: %d %d %d' % (Settings.blackMaxR, Settings.blackMaxG, Settings.blackMaxB))
+	print('Green gain: %.2f' % (Settings.greenGain))
+	print('Blue gain: %.2f' % (Settings.blueGain))
+	print('Target level for auto-gain: %.0f' % (Settings.targetLevel))
+	print('Erosion factor for colour channels: %.0f' % (Settings.erodeChannels))
+	print('Final colour minimums: %d %d %d' % (Settings.redMin, Settings.greenMin, Settings.blueMin))
+	print()
 
-	print '[Line correction]'
-	print 'Colour edge gap: %.0f pixels' % (Settings.maxSepX)
-	print 'Lane gap: %.0f pixels' % (Settings.trackSepX)
-	print 'Offset Y calculation target %d: (%d)' % (Settings.offsetTargetY, Settings.croppedTargetY)
-	print 'Corrective gain for derivative: %.3f' % (Settings.gainCorrection)
-	print
+	print('[Line correction]')
+	print('Colour edge gap: %.0f pixels' % (Settings.maxSepX))
+	print('Lane gap: %.0f pixels' % (Settings.trackSepX))
+	print('Offset Y calculation target %d: (%d)' % (Settings.offsetTargetY, Settings.croppedTargetY))
+	print('Corrective gain for derivative: %.3f' % (Settings.gainCorrection))
+	print()
 
-	print '[Start marker detection]'
-	print 'Levels: Min Red = %d, Max Green = %d, Max Blue = %d' % (Settings.startMinR, Settings.startMaxG, Settings.startMaxB)
-	print 'Start minimum match ratio: %.1f %%' % (Settings.startRatioMin * 100.0)
-	print 'Start crossed delay %.2f s (%d frames)' % (Settings.startCrossedSeconds, Settings.startCrossedFrames)
-	print 'Start re-detection delay: %.1f s' % (Settings.startRedetectionSeconds)
-	print 'Start detection zone X limits: %d to %d' % (Settings.startX1, Settings.startX2)
-	print 'Start detection zone Y position: %d' % (Settings.startY)
+	print('[Start marker detection]')
+	print('Levels: Min Red = %d, Max Green = %d, Max Blue = %d' % (Settings.startMinR, Settings.startMaxG, Settings.startMaxB))
+	print('Start minimum match ratio: %.1f %%' % (Settings.startRatioMin * 100.0))
+	print('Start crossed delay %.2f s (%d frames)' % (Settings.startCrossedSeconds, Settings.startCrossedFrames))
+	print('Start re-detection delay: %.1f s' % (Settings.startRedetectionSeconds))
+	print('Start detection zone X limits: %d to %d' % (Settings.startX1, Settings.startX2))
+	print('Start detection zone Y position: %d' % (Settings.startY))
 
-	print '[PID values]'
-	print '    P0: %f	I0:%f	D0: %f' % (Settings.forwardKp0, Settings.forwardKi0, Settings.forwardKd0)
-	print '    P1: %f	I1:%f	D1: %f' % (Settings.forwardKp1, Settings.forwardKi1, Settings.forwardKd1)
-	print '    P2: %f	I2:%f	D2: %f' % (Settings.forwardKp2, Settings.forwardKi2, Settings.forwardKd2)
-	print
+	print('[PID values]')
+	print('    P0: %f	I0:%f	D0: %f' % (Settings.forwardKp0, Settings.forwardKi0, Settings.forwardKd0))
+	print('    P1: %f	I1:%f	D1: %f' % (Settings.forwardKp1, Settings.forwardKi1, Settings.forwardKd1))
+	print('    P2: %f	I2:%f	D2: %f' % (Settings.forwardKp2, Settings.forwardKi2, Settings.forwardKd2))
+	print()
 
-	print '[FIR filter]'
-	print '    Taps: %d' % (Settings.firTaps)
-	print
+	print('[FIR filter]')
+	print('    Taps: %d' % (Settings.firTaps))
+	print()
 
-	print '[Drive settings]'
+	print('[Drive settings]')
 	steeringMin = Settings.steeringOffset - Settings.steeringGain
 	steeringMax = Settings.steeringOffset + Settings.steeringGain
-	print 'Maximum output: %.1f %%' % (Settings.maxPower * 100.0)
-	print 'Steering %+.1f %% to %+.1f %% (central %+.1f %%)' % (steeringMin * 100.0, steeringMax * 100.0, Settings.steeringOffset * 100.0)
-	print 'Missing frames before stopping: %d' % (Settings.maxBadFrames)
-	print
+	print('Maximum output: %.1f %%' % (Settings.maxPower * 100.0))
+	print('Steering %+.1f %% to %+.1f %% (central %+.1f %%)' % (steeringMin * 100.0, steeringMax * 100.0, Settings.steeringOffset * 100.0))
+	print('Missing frames before stopping: %d' % (Settings.maxBadFrames))
+	print()
 
-	print '[Override settings]'
-	print 'Stuck detection threshold: %.2f' % (Settings.stuckIdenticalThreshold)
-	print 'Stuck detection time: %.2f s (%d frames)' % (Settings.stuckIdenticalSeconds, Settings.stuckIdenticalFrames)
-	print 'Stuck reversing time: %.2f s (%d frames)' % (Settings.stuckOverrideSeconds, Settings.stuckOverrideFrames)
-	print 'Stuck hunting time: %.2f s (%d frames)' % (Settings.stuckHuntSeconds, Settings.stuckHuntFrames)
-	print 'Stuck colour detection at %d x %d' % (Settings.stuckDetectColourX, Settings.stuckDetectColourY)
-	print 'Wrong way detection threshold: %d' % (Settings.wrongWayThreshold)
-	print 'Wrong way spin time: %.2f s (%d frames)' % (Settings.wrongWaySpinSeconds, Settings.wrongWaySpinFrames)
-	print
+	print('[Override settings]')
+	print('Stuck detection threshold: %.2f' % (Settings.stuckIdenticalThreshold))
+	print('Stuck detection time: %.2f s (%d frames)' % (Settings.stuckIdenticalSeconds, Settings.stuckIdenticalFrames))
+	print('Stuck reversing time: %.2f s (%d frames)' % (Settings.stuckOverrideSeconds, Settings.stuckOverrideFrames))
+	print('Stuck hunting time: %.2f s (%d frames)' % (Settings.stuckHuntSeconds, Settings.stuckHuntFrames))
+	print('Stuck colour detection at %d x %d' % (Settings.stuckDetectColourX, Settings.stuckDetectColourY))
+	print('Wrong way detection threshold: %d' % (Settings.wrongWayThreshold))
+	print('Wrong way spin time: %.2f s (%d frames)' % (Settings.wrongWaySpinSeconds, Settings.wrongWaySpinFrames))
+	print()
 
-	print '===================='
-	print
+	print('====================')
+	print()
 
 # Function to load settings overrides
 def SettingsOverrides():
@@ -205,7 +205,7 @@ class RaceLoop(threading.Thread):
 
 	def run(self):
 		# This method runs in a separate thread, but shares global and local values / functions
-		execfile('Race.py', raceGlobals.copy(), raceLocals.copy())
+		exec(compile(open('Race.py').read(), 'Race.py', 'exec'), raceGlobals.copy(), raceLocals.copy())
 
 # Startup sequence
 os.system('sudo modprobe bcm2835-v4l2')
@@ -216,30 +216,30 @@ Globals.capture.set(cv2.cv.CV_CAP_PROP_FPS, Settings.frameRate);
 if not Globals.capture.isOpened():
 	Globals.capture.open()
 	if not Globals.capture.isOpened():
-		print 'Failed to open the camera'
+		print('Failed to open the camera')
 		sys.exit()
 
-print 'Setup communication threads'
+print('Setup communication threads')
 dataReceiver = DataTransmission.IncomingDataThread()
 dataSendRobot = DataTransmission.OutgoingDataThread(DataTransmission.theirIP)
 dataSendDisplay = DataTransmission.OutgoingDataThread(Settings.ipDisplay)
 
-print 'Setup stream processor threads'
+print('Setup stream processor threads')
 Globals.processorPool = [ImageProcessor.StreamProcessor(i+1) for i in range(Settings.processingThreads)]
 allProcessors = Globals.processorPool[:]
 
-print 'Setup control loop'
+print('Setup control loop')
 Globals.controller = ImageProcessor.ControlLoop()
 
-print 'Wait ...'
+print('Wait ...')
 time.sleep(2)
 captureThread = ImageProcessor.ImageCapture()
 
-print 'Start Race.py'
+print('Start Race.py')
 raceThread = RaceLoop()
 
 try:
-	print 'Press CTRL+C to quit'
+	print('Press CTRL+C to quit')
 	TB.SetLeds(0,0,1)
 	TB.MotorsOff()
 	if ImageProcessor.showProcessing:
@@ -278,15 +278,15 @@ try:
 except KeyboardInterrupt:
 	# CTRL+C exit, disable all drives
 	TB.SetLeds(0.5,0.5,0.5)
-	print '\nUser shutdown'
+	print('\nUser shutdown')
 	TB.MotorsOff()
 except:
 	# Unexpected error, shut down!
 	TB.SetLeds(0.5,0.5,0.5)
 	e = sys.exc_info()
-	print
-	print e
-	print '\nUnexpected error, shutting down!'
+	print()
+	print(e)
+	print('\nUnexpected error, shutting down!')
 	TB.MotorsOff()
 # Tell each thread to stop, and wait for them to end
 Globals.running = False
@@ -314,4 +314,4 @@ dataSendDisplay.terminated = True
 dataSendDisplay.event.set()
 dataSendDisplay.join()
 TB.SetLeds(0,0,0)
-print 'Program terminated.'
+print('Program terminated.')
