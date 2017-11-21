@@ -21,7 +21,7 @@ import Globals
 import urllib2
 print 'Libraries loaded'
 
-simulationIP = '127.0.0.1'			# Address of the machine running the simulation
+simulationIP = '192.168.1.216'			# Address of the machine running the simulation
 simulationPort = 10000				# Port number used by the simulation
 frameLimiter = True
 
@@ -30,9 +30,9 @@ imageUrl = r'http://%s:%d/view.png' % (simulationIP, simulationPort)
 setDriveUrl = r'http://%s:%d/?m1=%%.2f&m2=%%.2f&l1=%%d' % (simulationIP, simulationPort)
 
 # Change the current directory to where this script is
-scriptDir = os.path.dirname(sys.argv[0])
-os.chdir(scriptDir)
-print 'Running script in directory "%s"' % (scriptDir)
+#scriptDir = os.path.dirname(sys.argv[0])
+#os.chdir(scriptDir)
+#print 'Running script in directory "%s"' % (scriptDir)
 
 # Functions used by the processing to control the MonsterBorg
 def MonsterLed(r, g, b):

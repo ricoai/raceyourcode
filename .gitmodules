@@ -1,0 +1,4 @@
+[submodule "ricar_ryc"]
+	path = ricar_ryc
+	url = https://github.com/ricoai/ricar_ryc
+	branch = master

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Created by .ignore support plugin (hsz.mobi)
 ### Python template
 # Byte-compiled / optimized / DLL files
@@ -102,3 +103,7 @@ ENV/
 
 .idea/
 .idea/*
+=======
+*.pyc
+logs/*
+>>>>>>> 6238a4b3a7a7f904eb82c0ec3ca67587317d3420

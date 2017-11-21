@@ -25,7 +25,7 @@ firstStraightMin = 2.0				# Minimum number of seconds straight forward
 firstStraightMax = 4.0				# Maximum number of seconds straight forward
 
 # Network addresses
-ipDisplay = '192.168.1.131'			# IP address for the machine recording and displaying metrics
+ipDisplay = '192.168.1.216'			# IP address for the machine recording and displaying metrics
 ipFrontRobot = 'RYC-Front'			# IP address for the front robot IP addresses
 ipRearRobot = 'RYC-Rear'			# IP address for the front robot IP addresses
 transferPort = 99					# Port number used when receiving updates from robots
