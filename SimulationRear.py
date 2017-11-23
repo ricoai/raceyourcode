@@ -22,7 +22,7 @@ import urllib2
 print 'Libraries loaded'
 
 simulationIP = '192.168.1.216'			# Address of the machine running the simulation
-simulationPort = 10000				# Port number used by the simulation
+simulationPort = 10001				# Port number used by the simulation
 frameLimiter = True
 
 
@@ -55,8 +55,8 @@ def MonsterMotors(driveLeft, driveRight):
 def SendUpdates():
 	DataTransmission.UpdateDataToSend()
 	message = DataTransmission.BuildDataPacket()
-	#dataSendRobot.message = message
-	#dataSendRobot.event.set()
+	dataSendRobot.message = message
+	dataSendRobot.event.set()
 	dataSendDisplay.message = message
 	dataSendDisplay.event.set()
 
@@ -209,7 +209,7 @@ ImageProcessor.writeRawImages = False
 ImageProcessor.writeImages = False
 ImageProcessor.debugImages = False
 ImageProcessor.showProcessing = False
-ImageProcessor.showFps = True
+ImageProcessor.showFps = False
 ImageProcessor.showUnknownPoints = False
 ImageProcessor.predatorView = False
 ImageProcessor.scaleFinalImage = 1.0
@@ -324,8 +324,8 @@ except IOError:
 	sys.exit()
 
 print 'Setup communication threads'
-#dataReceiver = DataTransmission.IncomingDataThread()
-#dataSendRobot = DataTransmission.OutgoingDataThread(DataTransmission.theirIP)
+dataReceiver = DataTransmission.IncomingDataThread()
+dataSendRobot = DataTransmission.OutgoingDataThread(DataTransmission.theirIP)
 dataSendDisplay = DataTransmission.OutgoingDataThread(Settings.ipDisplay)
 
 print 'Rotate the robot to face rearwards...'
@@ -409,12 +409,12 @@ Globals.controller.join()
 captureThread.join()
 raceThread.join()
 MonsterMotors(0.0, 0.0)
-#dataReceiver.terminated = True
-#dataReceiver.tcpServer.socket.close()
-#dataReceiver.join()
-#dataSendRobot.terminated = True
-#dataSendRobot.event.set()
-#dataSendRobot.join()
+dataReceiver.terminated = True
+dataReceiver.tcpServer.socket.close()
+dataReceiver.join()
+dataSendRobot.terminated = True
+dataSendRobot.event.set()
+dataSendRobot.join()
 dataSendDisplay.terminated = True
 dataSendDisplay.event.set()
 dataSendDisplay.join()
