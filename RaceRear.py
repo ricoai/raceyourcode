@@ -22,6 +22,7 @@ while Globals.running:
 
 	print Globals.dataReceived
 
+	"""
 	# Full speed to the first corner
 	Speed(100)
 	WaitForWaypoint(2)
@@ -57,6 +58,7 @@ while Globals.running:
 	Speed(100)
 	AimForLane(-1)
 	WaitForWaypoint(1)
+	"""
 
 ### End of the race ###
 # Save a finish-line image
