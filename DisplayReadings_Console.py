@@ -11,11 +11,18 @@ ipFrontRobot = 'RYC-Front'			# IP address for the front robot IP addresses
 ipRearRobot = 'RYC-Rear'			# IP address for the front robot IP addresses
 transferPort = 99					# Port number used when receiving updates from robots
 
+<<<<<<< HEAD
 #TCP_IP = ipFrontRobot
 TCP_IP = '0.0.0.0'
 TCP_PORT = transferPort
 
 """
+=======
+TCP_IP = ipDisplay
+TCP_PORT = transferPort
+
+
+>>>>>>> 7ca0464f6d3d5a963e407631e2eaca44aca5de57
 data = ""
 try:
     sender = socket.socket(socket.AF_INET, socket.SOCK_STREAM, socket.IPPROTO_TCP)
@@ -27,6 +34,7 @@ try:
     sender.close()
 except Exception as ex:
     print "Error connecting", ex
+<<<<<<< HEAD
 """
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -48,3 +56,6 @@ while True:
 
     #conn.send(data)  # echo
 conn.close()
+=======
+
+>>>>>>> 7ca0464f6d3d5a963e407631e2eaca44aca5de57
