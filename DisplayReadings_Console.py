@@ -11,8 +11,9 @@ ipFrontRobot = 'RYC-Front'			# IP address for the front robot IP addresses
 ipRearRobot = 'RYC-Rear'			# IP address for the front robot IP addresses
 transferPort = 99					# Port number used when receiving updates from robots
 
-TCP_IP = ipFrontRobot
+TCP_IP = ipDisplay
 TCP_PORT = transferPort
+
 
 data = ""
 try:
@@ -25,3 +26,4 @@ try:
     sender.close()
 except Exception as ex:
     print "Error connecting", ex
+

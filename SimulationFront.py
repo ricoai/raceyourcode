@@ -55,10 +55,11 @@ def MonsterMotors(driveLeft, driveRight):
 def SendUpdates():
 	DataTransmission.UpdateDataToSend()
 	message = DataTransmission.BuildDataPacket()
-	#dataSendRobot.message = message
-	#dataSendRobot.event.set()
+	dataSendRobot.message = message
+	dataSendRobot.event.set()
 	dataSendDisplay.message = message
 	dataSendDisplay.event.set()
+	#print "SendUpdates", message
 
 # Function and data used to maintain the simulator state
 global simLed
@@ -208,7 +209,7 @@ ImageProcessor.writeRawImages = False
 ImageProcessor.writeImages = False
 ImageProcessor.debugImages = False
 ImageProcessor.showProcessing = False
-ImageProcessor.showFps = True
+ImageProcessor.showFps = False
 ImageProcessor.showUnknownPoints = False
 ImageProcessor.predatorView = False
 ImageProcessor.scaleFinalImage = 1.0
@@ -323,8 +324,8 @@ except IOError:
 	sys.exit()
 
 print 'Setup communication threads'
-#dataReceiver = DataTransmission.IncomingDataThread()
-#dataSendRobot = DataTransmission.OutgoingDataThread(DataTransmission.theirIP)
+dataReceiver = DataTransmission.IncomingDataThread()
+dataSendRobot = DataTransmission.OutgoingDataThread(DataTransmission.theirIP)
 dataSendDisplay = DataTransmission.OutgoingDataThread(Settings.ipDisplay)
 
 print 'Setup stream processor threads'
@@ -400,12 +401,12 @@ Globals.controller.join()
 captureThread.join()
 raceThread.join()
 MonsterMotors(0.0, 0.0)
-#dataReceiver.terminated = True
-#dataReceiver.tcpServer.socket.close()
-#dataReceiver.join()
-#dataSendRobot.terminated = True
-#dataSendRobot.event.set()
-#dataSendRobot.join()
+dataReceiver.terminated = True
+dataReceiver.tcpServer.socket.close()
+dataReceiver.join()
+dataSendRobot.terminated = True
+dataSendRobot.event.set()
+dataSendRobot.join()
 dataSendDisplay.terminated = True
 dataSendDisplay.event.set()
 dataSendDisplay.join()
