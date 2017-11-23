@@ -103,7 +103,6 @@ ENV/
 
 .idea/
 .idea/*
-=======
 *.pyc
 logs/*
->>>>>>> 6238a4b3a7a7f904eb82c0ec3ca67587317d3420
+
