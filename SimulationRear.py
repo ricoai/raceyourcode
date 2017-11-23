@@ -226,7 +226,7 @@ class RaceLoop(threading.Thread):
 
 	def run(self):
 		# This method runs in a separate thread, but shares global and local values / functions
-		execfile('Race.py', raceGlobals.copy(), raceLocals.copy())
+		execfile('RaceRear.py', raceGlobals.copy(), raceLocals.copy())
 
 # Simulation image capture thread
 class SimulationImageCapture(threading.Thread):
