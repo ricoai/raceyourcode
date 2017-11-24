@@ -24,13 +24,13 @@ while Globals.running:
 	WaitForWaypoint(2)
 	# Slow down, move to the inside in stages and wait for the apex
 	Speed(100)
-	AimForLane(-1)
+	AimForLane(2)
 	WaitForSeconds(0)
-	AimForLane(0)
+	AimForLane(1)
 	WaitForWaypoint(3)
 	# Speed up and move to the center until the S curve starts
 	Speed(100)
-	AimForLane(0)
+	AimForLane(-1)
 	WaitForWaypoint(4)
 	# Move towards the outside until the S curve changes
 	AimForLane(1.5)
