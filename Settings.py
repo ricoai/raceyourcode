@@ -166,13 +166,13 @@ targetTrackPosition = 0.0			# Target position on the track, 0 is the centre
 # Override system settings
 stuckIdenticalSeconds = 1.0			# Number of seconds with near identical frames before deciding we are stuck
 stuckIdenticalThreshold = 2.00		# Level at which two frames are seen as identical
-stuckOverrideSeconds = 1.5			# Number of seconds to reverse for when stuck
-stuckHuntSeconds = 0.8				# Number of seconds to hunt for the track after reversing when stuck
+stuckOverrideSeconds = 1.0 #1.5			# Number of seconds to reverse for when stuck
+stuckHuntSeconds = 0.6 #0.8				# Number of seconds to hunt for the track after reversing when stuck
 stuckDetectColourWidth = 0.5		# Position in the image along X to look for the track colour
 stuckDetectColourHeight = 0.9		# Position in the image along Y to look for the track colour
 flipDetectionSeconds = 0.5			# Number of seconds with frames which seem flipped before inverting movement
 flipDetectionThreshold = 35.00		# Minimum gain between the background and the track
-wrongWayThreshold = 10				# Number of wrong-way points before deciding to turn around
+wrongWayThreshold = 5 #10				# Number of wrong-way points before deciding to turn around
 wrongWaySpinSeconds = 0.8			# Number of seconds to spin when the wrong way around
 
 # Traffic light settings
