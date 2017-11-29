@@ -1,3 +1,5 @@
+speed_val = 100
+
 ### Start of the race ###
 # Wait until we can see the track
 while not TrackFound():
@@ -14,23 +16,23 @@ StartUserLog()
 # Wait for the go signal from the start/stop lights.
 WaitForGo()
 # Go at max speed
-Speed(50)
+Speed(speed_val)
 
 ### During the race ###
 # Race until terminated
 while Globals.running:
 	# Full speed to the first corner
-	Speed(50)
+	Speed(speed_val)
 	AimForLane(0.0)
 	WaitForWaypoint(2)
 	# Slow down, move to the inside in stages and wait for the apex
-	Speed(50)
+	Speed(speed_val)
 	AimForLane(1.0)
 	WaitForSeconds(0.1)
 	AimForLane(0.0)
 	WaitForWaypoint(3)
 	# Speed up and move to the center until the S curve starts
-	Speed(50)
+	Speed(speed_val)
 	AimForLane(0.0)
 	WaitForWaypoint(4)
 	# Move towards the outside until the S curve changes
@@ -42,19 +44,19 @@ while Globals.running:
 	AimForLane(1.0)
 	WaitForWaypoint(6)
 	# Slow down and move to the inside around the corner
-	Speed(50)
+	Speed(speed_val)
 	AimForLane(0.0)
 	WaitForWaypoint(7)
 	# Speed up for the back straight along the center
-	Speed(50)
+	Speed(speed_val)
 	AimForLane(1.0)
 	WaitForWaypoint(8)
 	# High speed for the last corner on the inside
-	Speed(50)
+	Speed(speed_val)
 	AimForLane(1.0)
 	WaitForWaypoint(9)
 	# Full speed until the start/finish line along the outside
-	Speed(50)
+	Speed(speed_val)
 	AimForLane(1.0)
 	WaitForWaypoint(1)
 
