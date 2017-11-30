@@ -139,7 +139,7 @@ forwardKd1 = 0.055					# D term for d1 input (Angle)
 forwardKp2 = 0.00					# P term for d2 input (Curvature)
 forwardKi2 = 0.00					# I term for d2 input (Curvature)
 forwardKd2 = 0.00					# D term for d2 input (Curvature)
-forwardClipI = 100					# Clipping limit for the integrators
+forwardClipI = 40  #100					# Clipping limit for the integrators
 
 # Reverse PID control values
 reverseKp0 = -0.15					# P term for d0 input (Offset)
@@ -151,7 +151,7 @@ reverseKd1 = 0.10					# D term for d1 input (Angle)
 reverseKp2 = -0.25					# P term for d2 input (Curvature)
 reverseKi2 = 0.00					# I term for d2 input (Curvature)
 reverseKd2 = -0.20					# D term for d2 input (Curvature)
-reverseClipI = 100					# Clipping limit for the integrators
+reverseClipI = 40  #100					# Clipping limit for the integrators
 
 # FIR filter settings
 firTaps = 3							# Number of readings (taps) the filter is working over
