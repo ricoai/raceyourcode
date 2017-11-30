@@ -12,7 +12,7 @@ processingThreads = 4				# Number of processing threads to work with
 # Camera settings
 imageWidth   = 160					# Camera image width
 imageHeight  = 120					# Camera image height
-frameRate    = 30					# Camera image capture frame rate
+frameRate    = 35					# Camera image capture frame rate
 fpsInterval  = frameRate			# Number of frames to average FPS over
 flippedImage = True					# True if the camera needs to be rotated
 
@@ -133,24 +133,24 @@ offsetTargetY = 0.25				# Y level from the top of the crop to use for offset cal
 forwardKp0 = 0.10					# P term for d0 input (Offset)
 forwardKi0 = 0.00					# I term for d0 input (Offset)
 forwardKd0 = 0.10					# D term for d0 input (Offset)
-forwardKp1 = 0.055					# P term for d1 input (Angle)
+forwardKp1 = 0.055 #0.055					# P term for d1 input (Angle)
 forwardKi1 = 0.00					# I term for d1 input (Angle)
-forwardKd1 = 0.055					# D term for d1 input (Angle)
-forwardKp2 = 0.00					# P term for d2 input (Curvature)
+forwardKd1 = 0.055  #0.055					# D term for d1 input (Angle)
+forwardKp2 = 0.00 #0.00					# P term for d2 input (Curvature)
 forwardKi2 = 0.00					# I term for d2 input (Curvature)
-forwardKd2 = 0.00					# D term for d2 input (Curvature)
+forwardKd2 = 0.00 #0.00					# D term for d2 input (Curvature)
 forwardClipI = 40  #100					# Clipping limit for the integrators
 
 # Reverse PID control values
-reverseKp0 = -0.15					# P term for d0 input (Offset)
+reverseKp0 = -0.11 #-0.13(24.5s) #-0.15					# P term for d0 input (Offset)
 reverseKi0 = 0.00					# I term for d0 input (Offset)
-reverseKd0 = -0.10					# D term for d0 input (Offset)
-reverseKp1 = 0.05					# P term for d1 input (Angle)
+reverseKd0 = -0.10 #-0.10					# D term for d0 input (Offset)
+reverseKp1 = 0.05 #0.05					# P term for d1 input (Angle)
 reverseKi1 = 0.00					# I term for d1 input (Angle)
-reverseKd1 = 0.10					# D term for d1 input (Angle)
-reverseKp2 = -0.25					# P term for d2 input (Curvature)
+reverseKd1 = 0.10 #0.10					# D term for d1 input (Angle)
+reverseKp2 = -0.21 #-0.23(24.5s) #-0.25					# P term for d2 input (Curvature)
 reverseKi2 = 0.00					# I term for d2 input (Curvature)
-reverseKd2 = -0.20					# D term for d2 input (Curvature)
+reverseKd2 = -0.16 #-0.18(24.5s) #-0.20					# D term for d2 input (Curvature)
 reverseClipI = 40  #100					# Clipping limit for the integrators
 
 # FIR filter settings
