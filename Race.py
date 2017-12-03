@@ -19,6 +19,7 @@ Speed(100)
 ### During the race ###
 # Race until terminated
 while Globals.running:
+	"""
 	# Full speed to the first corner
 	Speed(100)
 	WaitForWaypoint(2)
@@ -54,6 +55,26 @@ while Globals.running:
 	Speed(100)
 	AimForLane(-1)
 	WaitForWaypoint(1)
+	"""
+	WaitForWaypoint(3)
+	AimForLane(0.0)
+	WaitForWaypoint(4)
+	AimForLane(0.0)
+	WaitForWaypoint(5)
+	AimForLane(0.0)
+	WaitForWaypoint(6)
+	AimForLane(-1.0)
+	WaitForWaypoint(7)
+	AimForLane(-1.0)
+	WaitForWaypoint(8)
+	AimForLane(-1.0)
+	WaitForWaypoint(9)
+	AimForLane(-1.0)
+	WaitForWaypoint(1)
+	AimForLane(-1.0)
+	WaitForWaypoint(2)
+	AimForLane(-1.0)
+	
 
 ### End of the race ###
 # Save a finish-line image
