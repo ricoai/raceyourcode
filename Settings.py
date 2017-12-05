@@ -12,7 +12,7 @@ processingThreads = 4				# Number of processing threads to work with
 # Camera settings
 imageWidth   = 160					# Camera image width
 imageHeight  = 120					# Camera image height
-frameRate    = 35					# Camera image capture frame rate
+frameRate    = 30					# Camera image capture frame rate
 fpsInterval  = frameRate			# Number of frames to average FPS over
 flippedImage = True					# True if the camera needs to be rotated
 
