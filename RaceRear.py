@@ -23,32 +23,28 @@ Speed(speed_val)
 while Globals.running:
 	# Full speed to the first corner
 	Speed(speed_val)
-	AimForLane(1.0)
+	AimForLane(1.5)
 	WaitForWaypoint(2)
 	# Slow down, move to the inside in stages and wait for the apex
-	AimForLane(0.0)
-	WaitForSeconds(0.1)
-	Speed(speed_val)
-	AimForLane(0.0)
+	AimForLane(1.0)
 	WaitForWaypoint(3)
-	# Speed up and move to the center until the S curve starts
-	Speed(speed_val)
+	# Speed up and move to the center until the S curve start
 	AimForLane(1.0)
 	WaitForWaypoint(4)
 	# Move towards the outside until the S curve changes
 	AimForLane(1.0)
 	WaitForWaypoint(5)
-	Speed(80)
+	Speed(70)
 	# Move towards the inside until the S curve ends
-	AimForLane(0.0)
+	AimForLane(-1.0)
 	WaitForWaypoint(6)
 	# Slow down and move to the inside around the corner
-	Speed(speed_val)
-	AimForLane(2.0)
+	Speed(95)
+	AimForLane(1.5)
 	WaitForWaypoint(7)
 	# Speed up for the back straight along the center
 	Speed(speed_val)
-	AimForLane(1.0)
+	AimForLane(0.0)
 	WaitForWaypoint(8)
 	# High speed for the last corner on the inside
 	Speed(speed_val)
