@@ -31,7 +31,7 @@ while Globals.running:
 	# Speed up and move to the center until the S curve start
 	AimForLane(1.0)
 	WaitForWaypoint(4)
-	Speed(80)
+	Speed(95)
 	# Move towards the outside until the S curve changes
 	AimForLane(1.0)
 	WaitForWaypoint(5)
@@ -40,7 +40,7 @@ while Globals.running:
 	AimForLane(0.5)
 	WaitForWaypoint(6)
 	# Slow down and move to the inside around the corner
-	Speed(95)
+	Speed(90)
 	AimForLane(1.5)
 	WaitForWaypoint(7)
 	# Speed up for the back straight along the center
